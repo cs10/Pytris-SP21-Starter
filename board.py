@@ -5,7 +5,7 @@ class Board:
     def __init__(self, num_cols=10, num_rows=20, cell_item=None, grid=None):
         """ Create a Board instance that has num cols and num rows.
             The 2D board is represented with a single list, if the board looks like:
-            
+
             col  col  col
              0   1    2
             -------------
@@ -13,23 +13,22 @@ class Board:
             ----+---+----
             | 3 | 4 | 5 |  row 1
             -------------
-            
+
             Where num cols = 3, num rows = 2
-            
+
             Then the underlying representation looks like:
             [0, 1, 2, 3, 4, 5]
-
         Parameters
         ----------
         num_cols (int, required):
             number of columns. Defaults to 10.
-        
+
         num_rows (int, required):
             number of rows. Defaults to 20.
-        
+
         cell_item (any, optional):
             create default items. Defaults to None.
-        
+
         grid (list[any], optional): a list to create the underlying board representation.
                 However len(grid) = num_cols * num_rows. Defaults to None.
         """
@@ -44,47 +43,20 @@ class Board:
         else:
             self._grid = [cell_item for _ in range(num_cols * num_rows)]
 
-    def get_row(self, y):
-        """Get a copy of row y
-        
-        Parameters
-        ----------
-        y (int):
-            row number
-
-        Returns
-        -------
-        list[any]:
-            A list copy of row y
-        
-        >>> board = Board(3, 2, grid=[i for i in range(6)])
-        >>> print(board)
-        =====
-        0 1 2
-        3 4 5
-        =====
-        >>> board.get_row(0)
-        [0, 1, 2]
-        >>> board.get_row(1)
-        [3, 4, 5]
-        """
-        assert 0 <= y < self._num_rows, f'Invalid y: {y}'
-        start_index = y * self._num_cols
-        return self._grid[start_index : start_index + self._num_cols]
+# ---------------------------------------------------------------------------- #
+# --------------------------------- Required --------------------------------- #
+# ---------------------------------------------------------------------------- #
 
     def get_col(self, x):
         """Get a copy of column x
-
         Parameters
         ----------
         x (int):
             column number
-
         Returns
         -------
         list[any]:
             a list copy of column x
-
         >>> board = Board(3, 2, grid=[7, 6, 3, 9, 5, 2])
         >>> print(board)
         =====
@@ -102,24 +74,20 @@ class Board:
         >>> board2.get_col(0)
         [1, 4]
         """
-        assert 0 <= x < self._num_cols, f'Invalid x: {x}'
-        return [self._grid[r * self._num_cols + x] for r in range(self._num_rows)]
+        # TODO: your solution here
 
     def get_item(self, x, y):
         """Get the item at coordinate (x, y)
-
         Parameters
         ----------
         x (int):
             column number
         y (int):
             row number
-
         Returns
         -------
         any:
             actual item
-
         >>> board = Board(3, 2, grid=[5, 4, 1, 3, 0, 6])
         >>> print(board)
         =====
@@ -136,12 +104,10 @@ class Board:
         >>> [board2.get_item(x, y) for y in range(1) for x in range(4)]
         [9, 2, 4, 1]
         """
-        assert self.valid_coordinate((x, y)), f'Invalid (x, y): ({x}, {y})'
-        return self._grid[y * self._num_cols + x]
+        # TODO: your solution here
 
     def set_item(self, x, y, item):
         """Overwrite the item at (x, y)
-
         Parameters
         ----------
         x (int):
@@ -150,7 +116,6 @@ class Board:
             row number
         item (any):
             new item
-
         >>> board = Board(3, 2, grid=[i for i in range(6)])
         >>> print(board)
         =====
@@ -165,19 +130,17 @@ class Board:
         30 4 5
         =====
         """
-        assert self.valid_coordinate((x, y)), f'Invalid (x, y): ({x}, {y})'
-        self._grid[y * self._num_cols + x] = item
+        # TODO: your solution here
 
     def insert_row_at(self, y, lst):
         """Insert lst as new row at row y. Increment num_rows by 1
-
         Parameters
         ----------
         y (int):
             row number
         lst (list[any]):
             list of row items
-            
+
         >>> board = Board(3, 2, grid=list(range(6)))
         >>> print(board)
         =====
@@ -194,25 +157,20 @@ class Board:
         >>> board.get_num_rows()
         3
         """
-        assert len(lst) == self._num_cols, 'unequal number of columns'
-        index = y * self._num_cols
-        for item in reversed(lst):
-            self._grid.insert(index, item)
-        self._num_rows += 1
+        self._num_rows += 1 # DO NOT touch this line
+        # TODO: your solution here
+
 
     def valid_coordinate(self, coordinate):
         """Check if coordinate (x, y) is within the board
-
         Parameters
         ----------
         coordinate (tuple(x, y)):
             an (x: int, y: int) coordinate
-
         Returns
         -------
         bool:
             if the coordinate is valid within *this* board
-
         >>> board = Board(3, 2, grid=list(range(6)))
         >>> print(board)
         =====
@@ -234,21 +192,45 @@ class Board:
         >>> board.valid_coordinate((3, 0))
         False
         """
-        assert len(coordinate) == 2, 'coordinate has 2 items'
-        assert type(coordinate[0]) == int and type(coordinate[1]) == int, 'coordinate uses int'
-        x, y = coordinate
-        return 0 <= x < self._num_cols and \
-            0 <= y < self._num_rows and \
-            0 <= y * self._num_cols + x < len(self._grid)
+        # TODO: your solution here
 
-    def delete_row(self, y):
-        """Delete row y and decremet num_rows count by 1
+# ---------------------------------------------------------------------------- #
+# --------------------------- Helpers: Not Required -------------------------- #
+# ---------------------------------------------------------------------------- #
+
+    def get_row(self, y):
+        """Get a copy of row y
 
         Parameters
         ----------
         y (int):
             row number
+        Returns
+        -------
+        list[any]:
+            A list copy of row y
 
+        >>> board = Board(3, 2, grid=[i for i in range(6)])
+        >>> print(board)
+        =====
+        0 1 2
+        3 4 5
+        =====
+        >>> board.get_row(0)
+        [0, 1, 2]
+        >>> board.get_row(1)
+        [3, 4, 5]
+        """
+        assert 0 <= y < self._num_rows, f'Invalid y: {y}'
+        start_index = y * self._num_cols
+        return self._grid[start_index : start_index + self._num_cols]
+
+    def delete_row(self, y):
+        """Delete row y and decremet num_rows count by 1
+        Parameters
+        ----------
+        y (int):
+            row number
         >>> board = Board(3, 3, grid=list(range(9)))
         >>> print(board)
         =====
@@ -271,17 +253,14 @@ class Board:
 
     def index_to_coordinate(self, index):
         """Convert an index to (x, y) coordinate
-
         Parameters
         ----------
-        index (int): 
+        index (int):
             index in underlying list representation
-
         Returns
         -------
-        tuple[int, int]: 
+        tuple[int, int]:
             tuple coordinate
-
         >>> board = Board(3, 2, grid=[i for i in range(6)])
         >>> print(board)
         =====
@@ -297,24 +276,21 @@ class Board:
     def filter_coordinates(self, fn):
         """Extract coordinates of all item that satisfy fn and returns
             a list of these coordinates in tuples
-
         Parameters
         ----------
-        fn (any -> bool): 
+        fn (any -> bool):
             a boolean function that operates on items of *this* board
-
         Returns
         -------
-        list[tuple[int, int]]: 
+        list[tuple[int, int]]:
             a list of tuple coordinates
-
         >>> board = Board(3, 3, grid=[i for i in range(9)])
         >>> board.filter_coordinates(lambda x: x % 2 == 1)
         [(1, 0), (0, 1), (2, 1), (1, 2)]
         """
         return [(i % self._num_cols, i // self._num_cols) \
                     for i, item in enumerate(self._grid) if fn(item)]
-        
+
     def update_grid(self, new_grid):
         """ Overwrite existing underlying board with a new board
         """
@@ -334,7 +310,6 @@ class Board:
 
     def __contains__(self, item):
         """ Returns True if item is in this Board, False otherwise
-
         >>> board = Board(2, 3, grid=list(range(6)))
         >>> 5 in board
         True
@@ -346,7 +321,6 @@ class Board:
     def __getitem__(self, key):
         """ Using bracket notation e.g. [, ] and pass in either a number
         or a coordinate.
-
         >>> board = Board(3, 5, '*')
         >>> board[4] == board[(1, 1)] == board[[1, 1]] == '*'
         True
@@ -358,7 +332,6 @@ class Board:
     def __setitem__(self, key, value):
         """ Using bracket notation e.g. [, ] and pass in either a number
         or a coordinate.
-
         >>> board = Board(3, 5, '*')
         >>> board[7] = 70
         >>> board.get_item(1, 2)
@@ -371,7 +344,6 @@ class Board:
 
     def __iter__(self):
         """ Iterate through the underlying grid in row major order
-
         >>> board = Board(2, 2, grid=list(range(4)))
         >>> list(board)
         [0, 1, 2, 3]
@@ -381,7 +353,6 @@ class Board:
     def __reversed__(self):
         """ Iterate through the underlying grid in reverse row major order
             Use the built-in reversed() call.
-
         >>> board = Board(2, 2, grid=list(range(4)))
         >>> list(reversed(board))
         [3, 2, 1, 0]
@@ -390,7 +361,6 @@ class Board:
 
     def __len__(self):
         """ Returns the total number of elements
-
         >>> board = Board(3, 3, grid=list(range(9)))
         >>> len(board)
         9
@@ -402,7 +372,6 @@ class Board:
 
     def __str__(self):
         """ Print out the board items in a grid
-
         >>> board = Board(2, 3, grid=list(range(6)))
         >>> print(board)
         ===
